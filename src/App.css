@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -8,6 +9,9 @@ body {
 }
 
 .App {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   padding: 1rem;
 }
 
@@ -41,6 +45,92 @@ nav > div > p {
   font-size: 0.8rem;
 }
 
-ul {
-  list-style: none;
+table {
+  margin-top: 1rem;
+  border: 1px solid darkgray;
+}
+
+th {
+  padding: 0.5rem 0rem;
+  background-color: aliceblue;
+  border: 1px solid darkgray;
+}
+
+td {
+  padding: 0.5rem;
+}
+
+#addMovieButton {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+form > div > input {
+  padding: 0.5rem 0.25rem;
+}
+
+#errorMessage {
+  display: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  color: rgb(247, 123, 123);
+  background-color: rgb(87, 6, 6);
+}
+
+.forms {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.forms > div {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(181, 181, 181);
+  border: 1px solid black;
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+
+.editMovieForm.disabled {
+  background-color: rgb(219, 219, 219);
+  border: 1px solid gray;
+}
+
+.editMovieForm.disabled h3 {
+  color: darkgray;
+}
+
+.editMovieForm.disabled label {
+  color: darkgray;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
+
+.actionButtons > button {
+  padding: 0.25rem 1rem;
+  cursor: pointer;
+}
+
+#deleteMovieButton {
+  background-color: rgb(93, 6, 6);
+  color: rgb(247, 123, 123);
+  background-color: rgb(87, 6, 6);
+  border: 1px solid rgb(247, 123, 123);
 }
