@@ -8,22 +8,27 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   let movieItems = [];
+  let movieEditingId = 0;
 
-  function editMovie() {
+  function editMovie(movieId) {
+    movieEditingId = movieId;
+
     // Activamos el form para editar xd
     document.getElementById('editMovieForm').classList.remove('disabled');
-
-    // rehabilitamos los botones
     document.getElementById('editMovieName').disabled = false;
     document.getElementById('editMovieDirector').disabled = false;
     document.getElementById('editMovieButton').disabled = false;
 
-    // rellenamos los inputs con el contenido de la película a editar
-    console.log(this);
+    movies.forEach(movie => {
+     if (movie._id === movieId) {
+        document.getElementById('editMovieName').value = movie._name;
+        document.getElementById('editMovieDirector').value = movie._director;
+      }      
+    })
   }
 
   function deleteMovie() {
-    
+   // TODO: Hacer la función para borrar películas. 
   }
 
   for (let i = 0; i < movies.length; i++) {
@@ -42,15 +47,46 @@ function App() {
           {movies[i]._duration}
         </td>
         <td className='actionButtons'>
-          <button onClick={editMovie} id='edit' key={movies[i]._id + "edit"}>Edit</button>
-          <button onClick={deleteMovie} id='deleteMovieButton' key={movies[i]._id + "delete"}>Delete</button>
+          <button onClick={() => editMovie(movies[i]._id)} id='edit'>Edit</button>
+          <button onClick={() => deleteMovie(movies[i]._id)} id='deleteMovieButton'>Delete</button>
         </td>
       </tr>
     )
   }
 
   function handleEditForm() {
-    alert("edit form!")
+    // Comprobamos que los inputs están correctos y no están vacios
+    const nameInputEdit = document.getElementById('editMovieName');
+    const directorInputEdit = document.getElementById('editMovieDirector');
+    const editMovieButton = document.getElementById('editMovieButton');
+
+    if (nameInputEdit.value !== '' && directorInputEdit.value !== '') {
+
+      // Creamos una nueva película con los datos actualizados
+      const newMovie = movies.find(movie => movie._id === movieEditingId);
+
+      // Actualizamos los valorse
+      newMovie._name = nameInputEdit.value;
+      newMovie._director = directorInputEdit.value;
+
+      const newMovies = movies.map(movie =>
+        movie._id === movieEditingId ? { ...movie, ...newMovie } : movie
+      );
+      console.log("Peliculas actualizadas:", newMovies);
+      setMovies(newMovies);
+
+      // Deshabilitamos todo Y borramos el valor de los inputs
+      nameInputEdit.value = "";
+      directorInputEdit.value = "";
+      nameInputEdit.disabled = true;
+      directorInputEdit.disabled = true;
+      editMovieButton.disabled = true;
+      document.getElementById('editMovieForm').classList.add('disabled');
+
+
+    } else {
+      console.log("Introduzca texto para poder cambiar los valores.")
+    }
   }
 
   function handleForm() {
@@ -62,7 +98,6 @@ function App() {
     if (nameInput.value !== "" && directorInput.value !== "") {
       errorMessage.style.display = "none";
 
-      // Creamos un nuevo objeto Movie
       const newMovie = new Movie(nameInput.value, directorInput.value);
 
       setMovies([...movies, newMovie]);
@@ -140,7 +175,7 @@ function App() {
 
           <p id='errorMessage'></p>
 
-          <button disabled onClick={handleEditForm} id='editMovieButton'>Edit Movie</button>
+          <button onClick={handleEditForm} id='editMovieButton'>Edit Movie</button>
         </div>
 
       </div>
