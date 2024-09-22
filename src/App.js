@@ -11,24 +11,24 @@ function App() {
   let movieEditingId = 0;
 
   function editMovie(movieId) {
-    movieEditingId = movieId;
+    movieEditingId = movieId; // para el form de editar
 
-    // Activamos el form para editar xd
     document.getElementById('editMovieForm').classList.remove('disabled');
     document.getElementById('editMovieName').disabled = false;
     document.getElementById('editMovieDirector').disabled = false;
     document.getElementById('editMovieButton').disabled = false;
-
+    
     movies.forEach(movie => {
-     if (movie._id === movieId) {
+      if (movie._id === movieId) {
         document.getElementById('editMovieName').value = movie._name;
         document.getElementById('editMovieDirector').value = movie._director;
       }      
     })
   }
-
-  function deleteMovie() {
-   // TODO: Hacer la función para borrar películas. 
+ 
+  function deleteMovie(movieId) {
+    const updatedMovies = movies.filter(movie => movie._id !== movieId);
+    setMovies(updatedMovies);
   }
 
   for (let i = 0; i < movies.length; i++) {
@@ -55,17 +55,19 @@ function App() {
   }
 
   function handleEditForm() {
-    // Comprobamos que los inputs están correctos y no están vacios
     const nameInputEdit = document.getElementById('editMovieName');
     const directorInputEdit = document.getElementById('editMovieDirector');
     const editMovieButton = document.getElementById('editMovieButton');
 
+    console.log(nameInputEdit.value, directorInputEdit.value);
+
     if (nameInputEdit.value !== '' && directorInputEdit.value !== '') {
+      console.log("Id que se está editando:");
+      console.log(movieEditingId);
 
-      // Creamos una nueva película con los datos actualizados
       const newMovie = movies.find(movie => movie._id === movieEditingId);
-
-      // Actualizamos los valorse
+      console.log("Película a editar:")
+      console.log(newMovie);
       newMovie._name = nameInputEdit.value;
       newMovie._director = directorInputEdit.value;
 
@@ -75,7 +77,6 @@ function App() {
       console.log("Peliculas actualizadas:", newMovies);
       setMovies(newMovies);
 
-      // Deshabilitamos todo Y borramos el valor de los inputs
       nameInputEdit.value = "";
       directorInputEdit.value = "";
       nameInputEdit.disabled = true;
