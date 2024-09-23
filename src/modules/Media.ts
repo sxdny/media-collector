@@ -1,8 +1,11 @@
+var nOfMovies = 0;
+
 export interface Media {
   name: string,
 }
 
 export class Movie implements Media {
+  id: string = this.generateMovieId();
   name: string;
   director: string;
 
@@ -20,6 +23,12 @@ export class Movie implements Media {
 
     return new Movie(name, director);
 
+  }
+
+  public generateMovieId() {
+    const id = "movie-n-" + nOfMovies;
+    nOfMovies++;
+    return id;
   }
 
   static getKeys() {
