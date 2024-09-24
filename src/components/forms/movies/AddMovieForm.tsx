@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { addMovieForm } from "../../modules/types";
-import { Movie } from "../../modules/Media";
+import { addMovieForm } from "../../../modules/types";
+import { Movie } from "../../../modules/Media";
 
 const AddMovieForm: React.FC<addMovieForm> = ({ movies, setMovies }) => {
   const [name, setName] = useState<string>("");
   const [director, setDirector] = useState<string>("");
+
+  function clearInputs() {
+    setName('');
+    setDirector('');
+  }
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -12,6 +17,8 @@ const AddMovieForm: React.FC<addMovieForm> = ({ movies, setMovies }) => {
     const newMovie = Movie.create({ name, director });
 
     setMovies([...movies, newMovie]);
+
+    clearInputs();
   };
 
   return (
@@ -46,6 +53,7 @@ const AddMovieForm: React.FC<addMovieForm> = ({ movies, setMovies }) => {
             type="text"
             value={director}
             onChange={(e) => setDirector(e.target.value)}
+            onSubmitCapture={(e) => console.log("On Submit")}
           />
         </div>
         <button
