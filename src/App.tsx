@@ -1,20 +1,9 @@
-import { useState, useEffect } from "react";
-import { Movie } from "./modules/Media";
+import { MoviesTable } from "./components/MoviesTable";
 
-import AddMovieForm from "./components/forms/movies/AddMovieForm";
-import ShowMoviesTable from "./components/Table";
-
-
-function App() {
-  
-  const [movies, setMovies] = useState<Movie[]>([]);
-
+export default function App() {
   return (
-    <main className="h-screen flex justify-between">
-      <ShowMoviesTable movies={movies}></ShowMoviesTable>
-      <AddMovieForm movies={movies} setMovies={setMovies} />
+    <main className="h-screen flex justify-between p-5">
+      <MoviesTable></MoviesTable>
     </main>
   );
 }
-
-export default App;
