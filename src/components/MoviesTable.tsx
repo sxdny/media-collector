@@ -1,5 +1,5 @@
 import {
-  Table,
+  Table, 
   TableBody,
   TableCaption,
   TableCell,
@@ -12,10 +12,13 @@ import { Button } from "./ui/button";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 
 import { useAppSelector } from "../hooks/store";
+import { useMovieActions } from "../hooks/useMovieActions";
 
 export function MoviesTable() {
 
   const movies = useAppSelector((state) => state.movies);
+  
+  const removeMovie = useMovieActions();
 
   return (
     <Table>
@@ -40,7 +43,7 @@ export function MoviesTable() {
                 <Button variant="outline" size="icon">
                   <Pencil1Icon></Pencil1Icon>
                 </Button>
-                <Button variant="outline" size="icon">
+                <Button onClick={() => removeMovie(movie.id)} variant="outline" size="icon">
                   <TrashIcon></TrashIcon>
                 </Button>
               </TableCell>
